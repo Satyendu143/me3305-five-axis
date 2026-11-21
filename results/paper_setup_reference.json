@@ -1,0 +1,39 @@
+{
+  "source": "Xiang & Altintas 2016 Table 3; published setup reference only, not fitted data",
+  "A": {
+    "L_mm": 0,
+    "H_mm": 49.77,
+    "travel_deg": [
+      30,
+      -60
+    ],
+    "table_ball_MCS_mm": [
+      0,
+      24.885,
+      -456.237
+    ],
+    "spindle_ball_MCS_mm": [
+      100,
+      24.885,
+      -456.237
+    ]
+  },
+  "C": {
+    "L_mm": 100,
+    "H_mm": 49.49,
+    "travel_deg": [
+      0,
+      360
+    ],
+    "table_ball_MCS_mm": [
+      100,
+      0,
+      -449.849
+    ],
+    "spindle_ball_MCS_mm": [
+      100,
+      0,
+      -349.849
+    ]
+  }
+}

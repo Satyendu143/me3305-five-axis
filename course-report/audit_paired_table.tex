@@ -1,0 +1,12 @@
+\begin{table}[H]\centering\small
+\begin{tabular}{llrr}\toprule
+Truth & Noise & Radius difference [$\um$] & Paired 95\% interval\\\midrule
+Matched & iid & -0.002 & [-0.0039, -0.0001]\\
+Matched & correlated & -0.364 & [-0.3711, -0.3590]\\
+Harmonic & iid & -0.011 & [-0.0227, -0.0002]\\
+Harmonic & correlated & +0.105 & [+0.0404, +0.1685]\\
+Localized & iid & -0.012 & [-0.0503, +0.0208]\\
+Localized & correlated & +0.282 & [+0.1467, +0.4197]\\
+\bottomrule\end{tabular}
+\caption{Conformal ellipsoid minus sphere: mean volume-equivalent radius. Negative values favor the ellipsoid by this size metric; positive values favor the sphere. Intervals bootstrap 12 paired seed means.}\label{tab:auditpaired}
+\end{table}

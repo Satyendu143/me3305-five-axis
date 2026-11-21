@@ -1,0 +1,18 @@
+{
+  "task_design_unique_nested": "pass",
+  "task_design_full_rank": 43,
+  "exact_two_pole_step_and_semigroup": "pass",
+  "task_variance_gain_vs_direct_inverse": 0.0,
+  "wrapped_cubic2_exact_vs_sensitivity": 8.966727711594013e-15,
+  "periodic2_exact_vs_sensitivity": 1.3316921507336118e-14,
+  "periodic4_exact_vs_sensitivity": 1.337435229992365e-14,
+  "cubic2_exact_vs_sensitivity": 8.398724655609244e-15,
+  "wrapped_baseline_bounded_plus_scale": "pass",
+  "wrapped_seam_continuity_and_scale_identifiability": "pass",
+  "omitted_harmonics_zero_control": "pass",
+  "physical_clock_and_full_factorial": "pass",
+  "full_rank_covariance_formula": "pass",
+  "rank_deficient_covariance_not_zero": "pass",
+  "bootstrap_centred_on_seed_clusters": "pass",
+  "final_dashboard_exact_zoh_button_callback": "pass"
+}

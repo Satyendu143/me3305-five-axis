@@ -1,0 +1,19 @@
+{
+  "independent_plant_import_audit": "NumPy only",
+  "100_pose_direct_vs_homogeneous_max_mm": 2.086444348496176e-13,
+  "Fourier_wrap_and_separate_scale": "pass",
+  "zero_datum_maps": "pass",
+  "43_parameter_full_frame_sensitivity": 2.369585353672113e-10,
+  "equal_budget_unique_nested_design": "pass",
+  "mixed_tilt_full_rank": 43,
+  "orientation_cannot_fix_missing_tilts": 25,
+  "orientation_information_positive_semidefinite": "pass",
+  "first_order_inverse_matched_control": 8.881784197001252e-16,
+  "calibration_reproducibility": "pass",
+  "sensor_estimated_play_width_relative_error": 0.002498797933020089,
+  "coupled_remedy_ratio": 0.2088442295770802,
+  "mismatched_plant_not_numerical_zero": "pass",
+  "servo_state_causality": "pass",
+  "play_state_causality": "pass",
+  "dashboard_pure_callbacks": "pass"
+}

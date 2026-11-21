@@ -1,0 +1,31 @@
+{
+  "protocol": "Full regeneration with 12 seeds, 100 outer trials and 1,024 local parametric samples per cell. Archived study remains the reporting baseline.",
+  "checks": {
+    "audit_region_trials.csv": {
+      "rows": 50400,
+      "maximum_absolute_differences": {
+        "point_prediction_rms_um": 0.0,
+        "observed_coverage": 0.0,
+        "mean_radius_um": 0.0
+      }
+    },
+    "audit_shift_trials.csv": {
+      "rows": 21600,
+      "maximum_absolute_differences": {
+        "observed_coverage": 0.0,
+        "mean_radius_um": 0.0
+      }
+    },
+    "audit_nonlinear_MC.csv": {
+      "rows": 72,
+      "maximum_absolute_differences": {
+        "relative_empirical_vs_first_order": 0.0,
+        "mc_draws": 0.0,
+        "relative_split_MC_difference": 0.0,
+        "ratio_naive_to_joint_trace": 0.0,
+        "relative_MC_vs_first_order": 0.0,
+        "parametric_refit_mean_shift_um": 0.0
+      }
+    }
+  }
+}

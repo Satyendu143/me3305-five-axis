@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
+course-report/*.aux
+course-report/*.log
+course-report/*.out
+course-report/*.toc
+course-report/*.fls
+course-report/*.fdb_latexmk

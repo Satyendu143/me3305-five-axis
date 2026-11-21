@@ -1,0 +1,27 @@
+{
+  "tabs": 4,
+  "callbacks_checked": 15,
+  "rendered_objects": [
+    "VBox",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure",
+    "Figure"
+  ],
+  "scope": "Headless Python callback execution; no signed-in Colab frontend tested."
+}

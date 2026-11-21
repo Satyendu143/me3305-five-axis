@@ -1,0 +1,19 @@
+{
+  "spline5_periodic_C2_and_datum": "pass",
+  "spline5_full_rank": 43,
+  "spline5_exact_vs_sensitivity": "pass",
+  "spline9_periodic_C2_and_datum": "pass",
+  "spline9_full_rank": 67,
+  "spline9_exact_vs_sensitivity": "pass",
+  "localized_numpy_truth_periodicity": "pass",
+  "second_truth_no_estimator_imports": "pass",
+  "108_column_TCP_derivative_step_stability": "pass",
+  "TCP_covariance_positive_and_auxiliary_PSD": "pass",
+  "shared_nuisance_covariance_vs_raw_MC_relative_error": 0.012697704523937734,
+  "incomplete_auxiliary_covariance_differs_from_joint": "pass",
+  "conformal_finite_sample_order_statistic": "pass",
+  "conformal_exchangeable_rank_control": 0.958,
+  "live_covariance_sensor_SD_scaling": "pass",
+  "99_percent_region_requires_more_calibration": "pass",
+  "journal_widget_callbacks_and_unbounded_remedy": "pass"
+}

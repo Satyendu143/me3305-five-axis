@@ -1,0 +1,11 @@
+{
+  "batch_exact_fk_vs_scalar_max_mm": 7.105427357601002e-14,
+  "batch_measurement_vs_independent_frame_max_mm": 5.684341886080802e-14,
+  "batch_nuisance_offset_vs_scalar": "pass",
+  "correlated_joint_covariance_vs_full_block": "pass",
+  "naive_ablation_retains_both_marginal_covariances": "pass",
+  "correlated_raw_MC_relative_covariance_error": 0.010943507141405753,
+  "conformal_rejects_invalid_inputs": "pass",
+  "conformal_finite_sample_unbounded_branch": "pass",
+  "correlated_covariance_positive_definite": "pass"
+}

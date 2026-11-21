@@ -1,0 +1,42 @@
+\clearpage\section{How the numerical experiments are connected}
+\begin{center}\small
+\begin{tabular}{@{}p{27mm}p{52mm}p{69mm}@{}}\toprule
+Experiment & Controlled change & Question answered by its output\\\midrule
+Known-map geometry & Supply the exact error map and change which terms the compensator uses. & Can the inverse command recover a prescribed pose when geometry is known?\\
+Noisy calibration & Fit maps from independent virtual optical and ballbar readings. & How much position and orientation error remains after measurement and fitting?\\
+Independent plant & Change the rotary basis, fixture poses, tool length and error realization. & Does a map learned over one revolution extrapolate to another turn?\\
+Dynamic execution & Keep the path fixed and enable geometry, thermal, play and feedforward corrections in combinations. & Which mechanism dominates synchronous and normal-plane error at the tested speed?\\
+Response audit & Keep the fit fixed across seven region methods and assess new probe readings. & How much of the observed error can be attributed to sensor noise, omitted geometry or changed conditions?\\\bottomrule
+\end{tabular}\end{center}
+\textbf{Two distances along a trajectory.} Let $e_i=p_i-p_{d,i}$ and let $t_i$ denote the unit tangent to the nominal path. Synchronous position error uses $\|e_i\|$. The local normal-plane metric uses
+\[
+ e_{\perp,i}=(I-t_it_i^{\mathsf T})e_i,\qquad
+ E_{\perp}=\sqrt{N^{-1}\sum_i\|e_{\perp,i}\|^2}.
+\]
+A pure time lag on a locally straight segment contributes to synchronous error while its tangent component is removed from $e_{\perp,i}$. This sampled projection approximates contour deviation. The orientation metric measures the angle between the commanded and executed tool-axis unit vectors.
+
+\textbf{Design for identification or design for a task.} For marginal-noise-scaled pose sensitivity $B_i$, the information of a chosen set is $F=\sum_i B_i^{\mathsf T}B_i$. D-optimal selection maximizes $\log\det F$. The task-based implementation weights coefficient uncertainty by the displacement sensitivities $H_j$ on prospective commands and seeks to reduce
+\[
+ \operatorname{tr}(CF^{-1}),\qquad C=\frac1m\sum_{j=1}^m H_j^{\mathsf T}H_j .
+\]
+A small diagonal initialization permits the greedy procedure to start before the selected poses span the parameter space. The final fit uses its unregularized scaled matrix. Both criteria describe sensitivity to measurement noise within the model basis.
+
+\clearpage\subsection{From drive commands to independent sensor readings}
+For one axis, the first-order lag model advances the state under a held command $u_k$ as
+\[
+ x_k=(1-\alpha)x_{k-1}+\alpha u_k,\qquad
+ \alpha=1-\exp(-\Delta t/\tau).
+\]
+A transient test supplies an estimate of $\alpha$. Solving the same equation for the command gives $u_k^{\rm ff}=[d_k-(1-\hat\alpha)d_{k-1}]/\hat\alpha$ for a desired trajectory $d_k$. This explains the very small residual of the isolated, matched first-order drive experiment. In the more demanding integrated experiment the plant has two cascaded lag states. For a single held command, $a_i=\exp(-\Delta t/\tau_i)$ and $\tau_1\ne\tau_2$, the implemented exact update is
+\begin{align*}
+ x_{1,k}&=u_k+a_1(x_{1,k-1}-u_k),\\
+ x_{2,k}&=u_k+a_2(x_{2,k-1}-u_k)
+ +\frac{\tau_1(a_1-a_2)}{\tau_1-\tau_2}(x_{1,k-1}-u_k).
+\end{align*}
+The controller estimates an effective first-order response from a motor-side encoder. It cannot exactly invert both plant states. Play adds memory downstream of that encoder. For width $w$, the load position is the projection of its previous value onto $[u_k-w/2,u_k+w/2]$. A slow bidirectional scan estimates $w$ from the difference between median forward and reverse offsets.
+
+For thermal feedforward the training matrix is $X=[\mathbf{1},T_1,T_2,T_3]$, where the columns are noisy temperature-sensor records. The controller fits $\hat\beta=X^\dagger D$ to measured displacement $D$ on a separate warm-up. The simulated machine responds to lagged temperatures and includes a cross term in vertical displacement. A fitted static temperature map therefore leaves a residual on a different heating cycle.
+
+\textbf{One example of fair comparison.} The integrated simulator reuses the same path, initial conditions and noise realization for each combination of corrections. The inspection comparison similarly freezes its normal threshold while changing the replay case. Reusing these inputs makes differences between methods interpretable. Across independent seeds, the report first averages repeated noise draws within the seed and then compares seed means.
+
+\textbf{Reading units and percentages.} A TCP RMS in micrometres measures distance. A region's volume-equivalent radius $r=Q\det(V)^{1/6}$ is the radius of a sphere with the same volume as the ellipsoid. Coverage is the fraction of noisy three-component responses falling inside the region. These are distinct outputs even when two of them carry the same length units.

@@ -1,0 +1,402 @@
+{
+  "seeds": 12,
+  "synthetic": true,
+  "representation": {
+    "records": 864,
+    "selection_records": 72,
+    "aggregate": [
+      {
+        "truth_family": "harmonic",
+        "turns": 1,
+        "model": "wrapped_cubic",
+        "mean_rms_um": 7.171885008577717,
+        "seed_cluster_ci95": [
+          6.1088642685042664,
+          8.349363245307563
+        ],
+        "parameters": 31
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 1,
+        "model": "fourier2",
+        "mean_rms_um": 1.33305211961177,
+        "seed_cluster_ci95": [
+          1.1682900011475466,
+          1.5118136070090125
+        ],
+        "parameters": 43
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 1,
+        "model": "spline5",
+        "mean_rms_um": 1.8793373697428974,
+        "seed_cluster_ci95": [
+          1.6640986865184837,
+          2.119018537787884
+        ],
+        "parameters": 43
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 1,
+        "model": "fourier4",
+        "mean_rms_um": 0.4104801945231866,
+        "seed_cluster_ci95": [
+          0.34547673243085103,
+          0.477015327104129
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 1,
+        "model": "spline9",
+        "mean_rms_um": 0.4537102082063343,
+        "seed_cluster_ci95": [
+          0.3927351655113157,
+          0.5124166067676151
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 1,
+        "model": "validation_selected",
+        "mean_rms_um": 0.40948213518632404,
+        "seed_cluster_ci95": [
+          0.34547232191691474,
+          0.4751613552654652
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 3,
+        "model": "wrapped_cubic",
+        "mean_rms_um": 7.45761473882838,
+        "seed_cluster_ci95": [
+          6.310366683603347,
+          8.686907270385676
+        ],
+        "parameters": 31
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 3,
+        "model": "fourier2",
+        "mean_rms_um": 1.3639883189852462,
+        "seed_cluster_ci95": [
+          1.2027314323024265,
+          1.542235961738683
+        ],
+        "parameters": 43
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 3,
+        "model": "spline5",
+        "mean_rms_um": 1.919851855653918,
+        "seed_cluster_ci95": [
+          1.7026859082277073,
+          2.1631140796912454
+        ],
+        "parameters": 43
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 3,
+        "model": "fourier4",
+        "mean_rms_um": 0.41632360608114266,
+        "seed_cluster_ci95": [
+          0.352945953985996,
+          0.4810968852554634
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 3,
+        "model": "spline9",
+        "mean_rms_um": 0.46284138518895285,
+        "seed_cluster_ci95": [
+          0.40420933624708033,
+          0.5187570987949723
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "harmonic",
+        "turns": 3,
+        "model": "validation_selected",
+        "mean_rms_um": 0.41705914104564984,
+        "seed_cluster_ci95": [
+          0.35326726468652625,
+          0.4831207085352832
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "localized",
+        "turns": 1,
+        "model": "wrapped_cubic",
+        "mean_rms_um": 7.3381812238995066,
+        "seed_cluster_ci95": [
+          6.374913861020214,
+          8.573418549627432
+        ],
+        "parameters": 31
+      },
+      {
+        "truth_family": "localized",
+        "turns": 1,
+        "model": "fourier2",
+        "mean_rms_um": 1.6511089191600796,
+        "seed_cluster_ci95": [
+          1.320748989271544,
+          1.9757103936603526
+        ],
+        "parameters": 43
+      },
+      {
+        "truth_family": "localized",
+        "turns": 1,
+        "model": "spline5",
+        "mean_rms_um": 2.0958277769288474,
+        "seed_cluster_ci95": [
+          1.7138961937092814,
+          2.453373411172562
+        ],
+        "parameters": 43
+      },
+      {
+        "truth_family": "localized",
+        "turns": 1,
+        "model": "fourier4",
+        "mean_rms_um": 0.5372353086572947,
+        "seed_cluster_ci95": [
+          0.4592877745515428,
+          0.6231458933654542
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "localized",
+        "turns": 1,
+        "model": "spline9",
+        "mean_rms_um": 0.5939025888309009,
+        "seed_cluster_ci95": [
+          0.49109181193606266,
+          0.7089645150422809
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "localized",
+        "turns": 1,
+        "model": "validation_selected",
+        "mean_rms_um": 0.5321824705065259,
+        "seed_cluster_ci95": [
+          0.451351327214531,
+          0.61979362541704
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "localized",
+        "turns": 3,
+        "model": "wrapped_cubic",
+        "mean_rms_um": 7.569535329123423,
+        "seed_cluster_ci95": [
+          6.5824694296509625,
+          8.831066927201112
+        ],
+        "parameters": 31
+      },
+      {
+        "truth_family": "localized",
+        "turns": 3,
+        "model": "fourier2",
+        "mean_rms_um": 1.6529688133623204,
+        "seed_cluster_ci95": [
+          1.3300191775423853,
+          1.9691126466602704
+        ],
+        "parameters": 43
+      },
+      {
+        "truth_family": "localized",
+        "turns": 3,
+        "model": "spline5",
+        "mean_rms_um": 2.099168038837889,
+        "seed_cluster_ci95": [
+          1.7275345793077135,
+          2.4507491090684352
+        ],
+        "parameters": 43
+      },
+      {
+        "truth_family": "localized",
+        "turns": 3,
+        "model": "fourier4",
+        "mean_rms_um": 0.532811222478555,
+        "seed_cluster_ci95": [
+          0.45673446605720347,
+          0.6132721123263393
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "localized",
+        "turns": 3,
+        "model": "spline9",
+        "mean_rms_um": 0.5971010343592629,
+        "seed_cluster_ci95": [
+          0.49742213061457335,
+          0.7072799542039905
+        ],
+        "parameters": 67
+      },
+      {
+        "truth_family": "localized",
+        "turns": 3,
+        "model": "validation_selected",
+        "mean_rms_um": 0.533087911928383,
+        "seed_cluster_ci95": [
+          0.45500034804406114,
+          0.6169747094920275
+        ],
+        "parameters": 67
+      }
+    ],
+    "selection_counts": {
+      "harmonic": {
+        "fourier2": 0,
+        "spline5": 0,
+        "fourier4": 34,
+        "spline9": 2
+      },
+      "localized": {
+        "fourier2": 0,
+        "spline5": 0,
+        "fourier4": 21,
+        "spline9": 15
+      }
+    },
+    "protocol": "12 seeds x 3 configurations x 2 truth families x 2 turns x 6 schemes. 60 common training poses + 32 disjoint validation poses, all methods see same observations; one paired sensor-noise draw per seed; 121 points per held-out TCP path"
+  },
+  "uncertainty": {
+    "records": 3600,
+    "seeds": 12,
+    "trials_per_seed": 100,
+    "calibration_poses": 96,
+    "test_poses": 64,
+    "aggregate": [
+      {
+        "case": "matched",
+        "rotary_latent_coverage": 0.5613020833333332,
+        "rotary_latent_coverage_ci95": [
+          0.5452600911458334,
+          0.5756383463541666
+        ],
+        "full_latent_coverage": 0.9556380208333333,
+        "full_latent_coverage_ci95": [
+          0.9525647786458333,
+          0.9585940755208332
+        ],
+        "full_observed_coverage": 0.9497395833333333,
+        "full_observed_coverage_ci95": [
+          0.9479033203124999,
+          0.9513675130208332
+        ],
+        "conformal_observed_coverage": 0.9574609374999999,
+        "conformal_observed_coverage_ci95": [
+          0.9558590494791666,
+          0.9589065755208335
+        ],
+        "mean_region_radius_um": 1.5073055928136536,
+        "mean_region_radius_um_ci95": [
+          1.502524202329154,
+          1.512635867037187
+        ],
+        "tcp_prediction_rms_um": 0.23132344171886068,
+        "tcp_prediction_rms_um_ci95": [
+          0.22655562742937532,
+          0.2368971844086584
+        ],
+        "relative_sd_error": 0.07098549741807658
+      },
+      {
+        "case": "harmonic_mismatch",
+        "rotary_latent_coverage": 0.0056770833333333335,
+        "rotary_latent_coverage_ci95": [
+          0.0031510416666666666,
+          0.008268229166666667
+        ],
+        "full_latent_coverage": 0.05027343750000001,
+        "full_latent_coverage_ci95": [
+          0.035506510416666665,
+          0.0646875
+        ],
+        "full_observed_coverage": 0.5307031249999999,
+        "full_observed_coverage_ci95": [
+          0.45935937499999996,
+          0.5999837239583333
+        ],
+        "conformal_observed_coverage": 0.9654296875,
+        "conformal_observed_coverage_ci95": [
+          0.9627594401041667,
+          0.9683076171874999
+        ],
+        "mean_region_radius_um": 2.7522724751667034,
+        "mean_region_radius_um_ci95": [
+          2.5112845368292036,
+          3.046144286013435
+        ],
+        "tcp_prediction_rms_um": 1.341209518871955,
+        "tcp_prediction_rms_um_ci95": [
+          1.186280570273105,
+          1.514984776531917
+        ],
+        "relative_sd_error": 0.07098514937146681
+      },
+      {
+        "case": "localized_mismatch",
+        "rotary_latent_coverage": 0.007578124999999999,
+        "rotary_latent_coverage_ci95": [
+          0.002721354166666667,
+          0.013399088541666663
+        ],
+        "full_latent_coverage": 0.0585546875,
+        "full_latent_coverage_ci95": [
+          0.030416015625000004,
+          0.09138313802083332
+        ],
+        "full_observed_coverage": 0.452421875,
+        "full_observed_coverage_ci95": [
+          0.35776367187499997,
+          0.5593473307291664
+        ],
+        "conformal_observed_coverage": 0.9521744791666666,
+        "conformal_observed_coverage_ci95": [
+          0.9372913411458335,
+          0.9637503255208334
+        ],
+        "mean_region_radius_um": 3.511627402365558,
+        "mean_region_radius_um_ci95": [
+          2.9331388892004258,
+          4.085572368544868
+        ],
+        "tcp_prediction_rms_um": 1.7544962365522627,
+        "tcp_prediction_rms_um_ci95": [
+          1.3994440941775288,
+          2.115901127502911
+        ],
+        "relative_sd_error": 0.07098529808843014
+      }
+    ],
+    "scope": "First-order TCP covariance: 43 rotary coefficients + 11 shared PIGEs + 54 separately fitted linear coefficients. Gaussian known sensor variances; no frame uncertainty/dynamics. Split conformal covers future noisy XYZ probe responses marginally under exchangeability, not latent TCP or simultaneous trajectories. Reference configuration only; commands IID from disclosed distribution."
+  },
+  "wall_seconds": 675.9609198570251
+}

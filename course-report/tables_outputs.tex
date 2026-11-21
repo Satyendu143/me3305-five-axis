@@ -1,0 +1,81 @@
+\clearpage\section{Numerical outputs by protocol}
+\subsection{Calibration design and measurement cost}
+The columns below separate total held-out prediction error, its noise-only estimate and the bias measured with exact auxiliary inputs. Task I-optimal selection minimizes a linear prediction-variance criterion over the declared task distribution. That objective gives the smallest tabulated noise term. As omitted geometry grows, changing the selected poses also changes the approximation bias. The second table asks how many distinct poses a scalar-reading budget buys.
+\input{publication_design_table}\input{publication_sensor_table}
+\clearpage\subsection{Dynamic ablations and sampling interval}
+G denotes geometric compensation, T thermal feedforward, B inverse play and F servo feedforward. Read down each clock block to compare schemes on the same motion. Comparing G+B against G alone shows why the two error metrics both matter. In physical time the synchronous TCP error falls, but the normal-plane contour error rises. The lower table is a separate grid-refinement run with fixed estimated time constants.
+\input{publication_dynamic_table}\input{publication_grid_table}
+\clearpage\subsection{Model capacity and assessment target}
+The larger Fourier and spline fits below each have 67 coefficients. Validation-selected performance includes the cost of 32 additional six-channel validation poses. The lower table concerns a separate, fixed two-harmonic estimator. Changing from a latent target to a noisy observation changes the prediction covariance and the response used to assess it.
+\input{journal_rep_table}\input{journal_coverage_table}
+\clearpage\subsection{Uncertainty intervals and paired region sizes}
+The focused audit pairs methods within each seed. Intervals resample the 12 seed means, retaining the dependence of repeated fits and poses within a seed. The wide interval for localized discrepancy reflects considerable variation across synthetic error maps. The paired radius comparison is in micrometres and measures efficiency at the reported empirical coverage.
+\input{audit_coverage_table}\input{audit_paired_table}
+
+
+\clearpage\subsection{Complete output of the seven-method comparison}Each pair of columns gives coverage in percent and mean volume-equivalent radius in micrometres. The following numbers are calculated from the 50,400 fit-level records using \file{summarize.py}. Within a family and noise law, the point predictions are shared.
+
+\textbf{Matched geometry}
+
+\begin{center}\small\begin{tabular}{@{}lrrrr@{}}\toprule
+Method & IID (\%) & Radius & Corr. (\%) & Radius\\\midrule
+Rotary only & 93.96 & 1.412 & 91.60 & 1.412\\
+Joint, independent assumed & 94.98 & 1.449 & 92.57 & 1.449\\
+Joint, correct noise law & 94.98 & 1.449 & 94.97 & 1.251\\
+Zero parameter cross terms & 98.05 & 1.651 & 98.54 & 1.516\\
+Nonlinear Monte Carlo & 94.98 & 1.449 & 94.99 & 1.251\\
+Calibrated ellipsoid & 95.81 & 1.505 & 95.79 & 1.299\\
+Calibrated sphere & 95.86 & 1.507 & 95.84 & 1.663\\
+\bottomrule\end{tabular}\end{center}
+
+\textbf{Harmonic geometry}
+
+\begin{center}\small\begin{tabular}{@{}lrrrr@{}}\toprule
+Method & IID (\%) & Radius & Corr. (\%) & Radius\\\midrule
+Rotary only & 51.11 & 1.412 & 52.06 & 1.412\\
+Joint, independent assumed & 53.11 & 1.449 & 54.00 & 1.449\\
+Joint, correct noise law & 53.11 & 1.449 & 40.98 & 1.251\\
+Zero parameter cross terms & 64.04 & 1.651 & 57.91 & 1.516\\
+Nonlinear Monte Carlo & 53.12 & 1.449 & 41.00 & 1.251\\
+Calibrated ellipsoid & 95.97 & 2.710 & 96.47 & 2.857\\
+Calibrated sphere & 96.10 & 2.720 & 95.96 & 2.753\\
+\bottomrule\end{tabular}\end{center}
+
+\textbf{Localized geometry}
+
+\begin{center}\small\begin{tabular}{@{}lrrrr@{}}\toprule
+Method & IID (\%) & Radius & Corr. (\%) & Radius\\\midrule
+Rotary only & 46.14 & 1.412 & 46.53 & 1.412\\
+Joint, independent assumed & 47.95 & 1.449 & 48.27 & 1.449\\
+Joint, correct noise law & 47.95 & 1.449 & 38.84 & 1.251\\
+Zero parameter cross terms & 57.12 & 1.651 & 51.98 & 1.516\\
+Nonlinear Monte Carlo & 47.95 & 1.449 & 38.88 & 1.251\\
+Calibrated ellipsoid & 96.44 & 3.450 & 96.62 & 3.759\\
+Calibrated sphere & 96.43 & 3.462 & 96.32 & 3.477\\
+\bottomrule\end{tabular}\end{center}
+
+\clearpage\subsection{State-shift and inspection outputs}Each cell in the first table gives percent coverage / radius in micrometres. A stale threshold leaves the radius fixed as the response distribution moves. The localized case retains more stale coverage because its original regions were already wider. It still falls far below the target after the shift.
+
+\begin{center}\small\begin{tabular}{@{}llrrr@{}}\toprule
+Geometry & Noise & Before & Stale & Fresh\\\midrule
+Matched & IID & 95.81 / 1.505 & 0.11 / 1.505 & 95.77 / 4.010\\
+Matched & Correlated & 95.79 / 1.299 & 0.00 / 1.299 & 95.93 / 4.221\\
+Harmonic & IID & 95.97 / 2.710 & 25.70 / 2.710 & 95.87 / 4.864\\
+Harmonic & Correlated & 96.47 / 2.857 & 23.19 / 2.857 & 96.26 / 5.460\\
+Localized & IID & 96.44 / 3.450 & 47.79 / 3.450 & 96.22 / 5.312\\
+Localized & Correlated & 96.62 / 3.759 & 46.86 / 3.759 & 95.94 / 5.914\\
+\bottomrule\end{tabular}\end{center}
+
+\medskip\textbf{Inspection notebook replay.} All cases use the same normal-reference threshold. An alarm on a nonfinite measurement is tagged as an acquisition fault. Harmonic and localized cases have no pose-level fault labels; their alarm counts are descriptive.
+
+\begin{center}\small\begin{tabular}{@{}lrrrl@{}}\toprule
+Case & Responses & Alarms & Invalid & Labels\\\midrule
+normal & 64 & 0 & 0 & yes\\
+offset & 64 & 64 & 0 & yes\\
+sparse\_spikes & 64 & 8 & 0 & yes\\
+dropout & 64 & 8 & 8 & yes\\
+harmonic\_mismatch & 64 & 29 & 0 & no\\
+localized\_mismatch & 64 & 27 & 0 & no\\
+\bottomrule\end{tabular}\end{center}
+
+The eight injected spikes yield eight true positives, 56 true negatives and zero false positives or missed injections. The eight dropouts also trigger eight alarms, all carrying the invalid-reading flag. At 99\% confidence with only 96 calibration scores, the required order exceeds the sample, so the statistical threshold becomes infinite. Missing measurements still trigger the quality flag. An undefined precision or recall is stored as a null value when its denominator is zero.

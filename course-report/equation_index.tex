@@ -1,0 +1,50 @@
+\clearpage\section{Source-equation implementation index}Equation numbers here refer to Xiang and Altintas~\cite{xiang}. The table records how the project interpreted each source equation and where the corresponding operation is performed. Entries concerning the printed inverse describe the project implementation check.
+{\small\begin{longtable}{p{.11\linewidth}p{.42\linewidth}p{.37\linewidth}}
+\toprule Paper equations & Derivation / status & Implementation \\\midrule\endhead
+(1) & Separate spindle and workpiece product-of-exponential chains & \texttt{Machine.chains} with zero error model \\
+(2) & Relative transform by inverse table chain & \texttt{Machine.matrix} \\
+(3) & Axis-point velocity gives $v=q\times\omega$ & \texttt{exp\_twist}, rotation helpers \\
+(4) & Integrated twist ODE and exact translation & \texttt{exp\_twist} \\
+(5) & Rodrigues power-series reduction & \texttt{rx}, rotation exponential \\
+(6) & Zero-angular-component translation limit & \texttt{trans}, \texttt{exp\_twist} \\
+(7) & Ideal and actual line twists & Axis-line derivation and adjoint; no experimental line data \\
+(8) & Exact axis map/logarithm derived; printed pitch form is conditional & General \texttt{exp\_twist}; elementary error factors avoid singular normalization \\
+(9) & Parallel-line translation branch & \texttt{trans} \\
+(10) & Angular error about a chosen point & \texttt{exp\_twist} with $v=q_e\times u_e$ \\
+(11) & C tilt about Y through $(O_x,O_y,O_z)$ & Y error rotation; generic offset twist supported \\
+(12) & Ordered six-component axis error motions & \texttt{pdge\_matrix} \\
+(13) & Three linear squareness signs & \texttt{ErrorModel.pige\_blocks} \\
+(14) & Eight absolute rotary PIGE factors & Same function, absolute convention \\
+(15) & All errors inserted at topology-specific positions & \texttt{Machine.chains} \\
+(16) & Exact erroneous relative transform & \texttt{Machine.matrix/fk} \\
+(17) & Relative eight-PIGE table-ball chain and its linearization & \texttt{table\_exact}, \texttt{table\_sensitivity}, vectorized exact predictor \\
+(18) & PDGE cross-product displacement expansion & \texttt{a\_design}, table sensitivities \\
+(19) & Relative PIGE displacement terms & First eight table-sensitivity columns \\
+(20) & A radial eccentricity offsets & \texttt{piges\_from\_eccentricities} \\
+(21) & A axial eccentricity tilts & Same function \\
+(22) & C radial combined link terms & Same function \\
+(23) & C axial eccentricity tilts & Same function \\
+(24) & A axial scalar projection & \texttt{directions}, \texttt{a\_design} \\
+(25) & A radial scalar projection & Same functions \\
+(26) & A tangential scalar projection & Same functions \\
+(27) & Remove PIGE projection before PDGE inversion & Joint/alternating fit residual splitting \\
+(28) & Complete A-axis nine-reading observation matrix & \texttt{a\_design}, \texttt{a\_readings} \\
+(29) & Literal inverse fails audit; consistent stable inverse derived & \texttt{a\_printed\_eq29}, \texttt{a\_corrected}, symbolic tests \\
+(30) & Target-minus-actual position/direction residual & \texttt{compensate} \\
+(31) & Cumulative corrected CL command and normalization & \texttt{compensate(method='paper')} \\
+(32) & Cubic measured error-map representation & \texttt{ErrorModel.evaluate}, calibration cubic basis \\
+(33) & MCS position equals shifted PCS coordinate & \texttt{pcs\_map}, model origin \\
+(34) & Datum error subtraction; full frame map also explained & \texttt{pcs\_map}; exact relative matrices \\
+(35) & Homogeneous direction with final component zero & \texttt{Machine.fk}, rotation-column extraction \\
+(36) & Direction depends on ideal rotary drives only & \texttt{Machine.ik} \\
+(37) & Intermediate vector for two rotations & \texttt{paden\_kahan\_orientation} \\
+(38) & Intermediate-vector basis expansion & Same function \\
+(39) & Projection/norm constraints solve coefficients and branches & Same function \\
+(40) & A planar dot/cross angle formula & Same function; AC simplification in \texttt{ik} \\
+(41) & C planar angle with inverse-rotation sign & Same function; AC simplification in \texttt{ik} \\
+(42) & Ideal forward position from homogeneous origin & \texttt{Machine.fk} with zero error model \\
+(43) & Cartesian inverse after selecting rotary angles & \texttt{Machine.ik} \\
+(44) & Spindle-side forward chain during RTCP tracking & \texttt{Machine.chains}; nominal sphere follower \\
+(45) & Exact inter-sphere length minus nominal length & \texttt{exact\_predictions}, ballbar compensation experiment \\
+\bottomrule
+\end{longtable}}

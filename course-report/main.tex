@@ -1,0 +1,145 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=23mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,graphicx,booktabs,array,listings,float,longtable}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Five-Axis Machine Tool Calibration and Compensation},pdfauthor={Satyendu Kar, Prateek Kathare, Rishit Khandelwal, Shriansh Krishna Dasi, Sarvesh Sasikumar}}
+\newcommand{\um}{\ensuremath{\mu\mathrm{m}}}
+\newcommand{\file}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\ur}{\ensuremath{\mu\mathrm{rad}}}
+\newcommand{\tr}{^{\mathsf T}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setcounter{tocdepth}{1}
+\lstset{basicstyle=\small\ttfamily,columns=fullflexible,keepspaces=true,frame=single,framerule=.3pt,xleftmargin=4pt,xrightmargin=4pt}
+\begin{document}
+\hypersetup{pageanchor=false}\begin{titlepage}\centering
+\vspace*{9mm}
+\includegraphics[width=49mm]{crest.png}\par
+\vspace{16mm}
+{\LARGE\bfseries Project Report on\par}
+\vspace{5mm}
+{\Large\bfseries Five-Axis Machine Tool Calibration\\[2mm] and Compensation\par}
+\vspace{5mm}
+{\large ME3305: Manufacturing Technology -- II\par}
+\vspace{16mm}
+{\Large\bfseries Team Members\par}
+\vspace{3mm}
+\begin{tabular}{@{}lr@{}}
+Satyendu Kar & ME24B059\\
+Prateek Kathare & ME24B050\\
+Rishit Khandelwal & ME24B054\\
+Shriansh Krishna Dasi & ME24B014\\
+Sarvesh Sasikumar & ME24B058
+\end{tabular}\par
+\vfill
+{\small\textbf{Project repository}\par
+\url{https://github.com/Satyendu143/me3305-five-axis}\par}
+\vspace{8mm}
+21 November 2026\par
+\end{titlepage}\hypersetup{pageanchor=true}
+\tableofcontents\clearpage
+\section{Abstract}
+A rotary table can return to the same angular orientation after one revolution, yet a polynomial fit to its geometric error can predict a different tool position on every turn. We use a simulated XYZ--AC machine to follow this error from calibration readings to the programmed tool path. In a three-turn test, a two-harmonic rotary map gives a mean tool-center-point (TCP) RMS error of 1.364~\um; an unwrapped cubic fitted over one turn gives 2043.616~\um. A separate experiment asks whether the fitted model can also predict the uncertainty of a future XYZ reading. Under independent noise, nominal 95\% regions cover 94.98\% of readings when the geometry is correctly represented, falling to 47.95\% with localized unmodelled errors. Fresh reference readings can restore marginal coverage by widening the region. These results quantify three different outcomes: geometric correction, executed-path accuracy and reliability of a prediction region.
+\section{Aim and numerical apparatus}
+The task is to bring a tool tip to a programmed position and orientation relative to the workpiece. Tilting the table about A or indexing it about C changes the lever arm through which an angular error displaces the tip. The apparatus comprises a kinematic estimator, a separately implemented synthetic machine, virtual displacement and angle sensors, and an XYZ assessment probe. Exact plant coordinates are available for scoring simulated trajectories. A fresh probe reading includes its own noise. All lengths and angles in the model use mm and rad; tables give position error in \um.
+\textbf{Reading the figures.} A position-dependent geometric error (PDGE) changes with an axis coordinate; a position-independent geometric error (PIGE) describes a fixed alignment or location offset. The machine coordinate system (MCS) is attached to the machine base. The part coordinate system (PCS) moves with the workpiece. A cutter location (CL) specifies a position and tool-axis direction in the PCS. RTD denotes a resistance temperature detector. Angles shown as $\mu$rad and displacements shown as $\mu$m are kept separate; only the calibration fit converts angular readings to an equivalent length using its declared lever arm.
+
+\textbf{How to use the report.} The opening sections give the model, calibration procedure and central results. The subsequent experiments pair each plot with its generating module and explain the physical meaning of the numerical output. The tables at the end retain the comparison groups, measurement budgets and uncertainty intervals. The appendix maps the original 45 geometric equations to the implementation.
+\newpage
+\section{Theory and calibration}
+\textbf{Geometry.} For command $q=(x,y,z,a,c)$, let $g_{bw}$ and $g_{bt}$ map the workpiece and tool frames to the machine base. The TCP in workpiece coordinates and an individual axis error transform are
+\begin{equation}
+ p(q)=[g_{bw}^{-1}g_{bt}]_{1:3,4},\qquad
+ E_i=T(\delta x_i,\delta y_i,\delta z_i)R_x(\epsilon_{xi})R_y(\epsilon_{yi})R_z(\epsilon_{zi}).
+\end{equation}
+The X--A--C chain carries the workpiece and the Y--Z chain carries the tool. Following Xiang and Altintas~\cite{xiang}, each of the five axes has three translational and three angular error channels. Eleven further quantities describe fixed relative alignment. Rotation order matters because each downstream offset is expressed in a frame already displaced by upstream axes. \file{fiveaxis.py} composes the transforms; \file{independent_plant.py} advances the origin and orientation separately to cross-check the implementation.
+ 
+\textbf{Rotary error map.} Linear axes and the limited-travel A axis use datum-zero cubics. For each C-axis channel $j$, the two-harmonic estimator uses
+\begin{equation}
+ e_j(c)=\sum_{k=1}^{2}\{b_{jk}\sin kc+d_{jk}(\cos kc-1)\}
+       +\mathbf{1}_{j=6}\,s_c c.
+\end{equation}
+The oscillatory terms repeat every revolution and vanish at the datum. The final term allows angular scale error to accumulate. This distinction prevents an arbitrary cubic extrapolation while retaining a physical source of turn-to-turn error. There are 18 A coefficients, 24 periodic C coefficients and one scale coefficient.
+ 
+\textbf{Fitting procedure.} In the final uncertainty audit a greedy D-optimal design selects 48 of 320 fixture poses by maximizing the gain in log determinant of the information matrix. The 288 rotary readings comprise three XYZ displacements and three separately observed angles per pose. The simulation assumes displacement and angular standard deviations of 0.2~\um{} and 0.5~$\mu$rad. An ordinary three-probe R-test supplies only the displacements. Auxiliary measurements estimate 11 alignment errors and 54 linear-axis coefficients (929 scalar readings in total).
+ 
+For rotary sensitivity $M$, measured vector $m$, auxiliary offset $f_0(\hat\eta)$ and inverse marginal noise scales $W$, the fit is
+\begin{equation}
+ P=(WM)^\dagger,\qquad \hat z=P\,W\{m-f_0(\hat\eta)\}.
+\end{equation}
+\file{periodic_model.py} builds pose sensitivities. The solver in \file{publication_studies.py} checks singular values against $10^{-10}$ times the largest one. The selected design resolves all 43 columns. A full-rank fit can still miss a physical error shape absent from the basis.
+\textbf{Why pose choice alone cannot remove bias.} In a separate 24-trial design comparison with 288 rotary readings, the D-optimal set gives a smaller noise-only RMS contribution than the space-filling set (0.120 versus 0.132~\um), yet its observed held-out displacement RMS is larger (1.466 versus 1.409~\um). Selecting poses for parameter information improves noise sensitivity; the remaining shape error depends on where the model is fitted and evaluated.
+\newpage
+\section{Compensation and tool-path results}
+At each cutter location the ideal inverse kinematics gives a starting command. The fitted machine predicts the resulting position $p_k$ and tool direction $o_k$. With desired values $p_d,o_d$, the implementation updates the commanded Cartesian target and normalizes its direction:
+\begin{align}
+ p^c_{k+1}&=p^c_k+(p_d-p_k),&
+ o^c_{k+1}&=\frac{o^c_k+(o_d-o_k)}{\|o^c_k+(o_d-o_k)\|}.
+\end{align}
+\file{fiveaxis.compensate} maps this target back to joint space. The preceding command guides inverse-kinematic branch selection along the path. The independent plant then evaluates the compensated commands. For $N$ samples the reported TCP RMS is $[N^{-1}\sum_i\|p_i-p_{d,i}\|^2]^{1/2}$.
+ 
+\begin{center}
+\begin{tabular}{@{}lrrr@{}}\toprule
+C-axis representation & Rotary coefficients & One turn (\um) & Three turns (\um)\\\midrule
+Uncompensated & 0 & 64.903 & 64.992\\
+Unwrapped cubic & 36 & 7.162 & 2043.616\\
+Wrapped cubic & 31 & 7.172 & 7.458\\
+Two harmonics + scale & 43 & 1.333 & 1.364\\
+Four harmonics + scale & 67 & 0.410 & 0.416\\\bottomrule
+\end{tabular}\par\small \refstepcounter{table}Table \thetable. Mean static TCP RMS over error seeds and machine configurations.\end{center}
+Wrapping the cubic removes most of the three-turn penalty. The periodic fit improves the one-turn result as well. Model capacity differs across Table 1. In a separate equal-capacity comparison on the localized-error family, three-turn mean RMS is 1.653~\um{} for a two-harmonic map and 2.099~\um{} for a five-knot periodic spline (43 coefficients each). These comparisons used 60 rotary training poses, separate from the 48-pose uncertainty study.
+ 
+\textbf{Executing the path.} The simulated drives also exhibit thermal displacement, backlash on reversal, and servo lag. \file{dynamic_sim.py} applies fitted geometry, temperature-based correction, inverse play and servo feedforward in different combinations. On the 30~s physical-clock, 2.5-turn path, TCP RMS falls from 458.45~\um{} without compensation to 424.15~\um{} with geometry alone, 44.09~\um{} with geometry plus feedforward, and 39.38~\um{} with all four corrections. For the latter two schemes, normal-plane contour RMS is 18.50 and 12.87~\um{}, respectively. The difference from TCP RMS matters: a drive can lag along the intended path and incur substantial synchronous position error while staying close to the curve.
+\newpage
+\section{Prediction uncertainty and implementation}
+After geometric correction, how far might a future XYZ probe reading fall from the predicted tip position? The same auxiliary estimate enters twice: it affects the rotary fit and it enters the final forward kinematics. To retain that dependence, let $H=\partial p/\partial z$, $G=\partial p/\partial\eta$ and $D_w=W\,\partial f_0/\partial\eta$. For scaled rotary noise $\varepsilon$ and independent auxiliary error $\nu$ with covariances $R,C_\eta$, respectively, the linearized errors obey
+\begin{align}
+ \delta z&=P\varepsilon-PD_w\nu+b_z,\\
+ \delta p&=HP\varepsilon+K\nu+b_p,\qquad K=G-HPD_w,\\
+ C_p&=HP R P\tr H\tr + K C_\eta K\tr .
+\end{align}
+Offsets $b_z,b_p$ include systematic mismatch. The covariance measures spread about the mean; its size alone cannot determine the offset. \file{audit_models.covariance_variants} computes this joint expression and a comparison that zeros the fitted cross-covariance while retaining both marginal blocks.
+ 
+A measured response $y=p_*+e_{\rm probe}$ has an additional probe covariance $\Sigma_{\rm probe}$ (marginal SD 0.5~\um). Write $r=y-\hat p$ and $V=C_p+\Sigma_{\rm probe}$. A Gaussian ellipsoid accepts $r\tr V^{-1}r\leq\chi^2_{3,0.95}$. A second method refits 1,024 simulated datasets about one fitted reference in each seed/family/noise cell and substitutes the sample TCP covariance. It checks whether nonlinear propagation changes the result at the tested noise levels.
+ 
+\textbf{Calibrating a region on measurements.} For each fit, 96 separate reference commands supply scores $s_i=(r_i\tr V_i^{-1}r_i)^{1/2}$. The split-conformal threshold is the 93rd smallest score, since $\lceil(96+1)0.95\rceil=93$~\cite{lei}. A fresh response is inside the region if its score is at most this threshold. Choosing $V=I$ yields the spherical baseline. With exchangeable commands and responses, continuous scores give marginal coverage $93/97=95.88\%$. A fixed pose or a complete machining trajectory requires a different guarantee.
+ 
+\begin{lstlisting}[language=Python]
+scores = many_scores(residual, V[method])
+threshold = many_threshold(scores[:, :96])
+covered = scores[:, 96:] <= threshold[:, None]
+\end{lstlisting}
+This excerpt of the conformal branch in \file{audit_studies.py} shows the data split. Rows index noisy fits; columns index commands. The last 64 commands are reserved for assessment. The audit crosses 12 truth seeds, three error families, two noise laws and 100 noise realizations (7,200 fits). The seven region methods share point predictions. Only the conformal methods use the 96 extra XYZ readings.
+\newpage
+\enlargethispage{8mm}
+\section{Results, inspection and discussion}
+\begin{center}
+\includegraphics[width=.90\linewidth]{coverage.pdf}\par
+\small \refstepcounter{figure}Figure \thefigure. Independent sensor noise. The dashed line marks 95\%. Panel (b) uses the covariance-shaped conformal region on the matched machine.\end{center}
+The joint Gaussian region covers 94.98\% of measured positions under matched geometry. Omitted higher harmonics reduce coverage to 53.11\%; localized errors reduce it to 47.95\%. Nonlinear Monte Carlo gives 94.98\%, 53.12\% and 47.95\%, respectively. Both propagation methods retain the same error map. New XYZ readings reveal the larger residuals, and the calibrated sphere covers 95.86\%, 96.10\% and 96.43\% across the same cases.
+ 
+\textbf{Correlation and region size.} Under matched geometry, assuming independent channels gives 92.57\% coverage when the simulated channels are correlated; using their known correlation gives 94.97\%. This comparison changes both rotary and probe correlation. In the matched correlated case, the calibrated ellipsoid has mean volume-equivalent radius 1.299~\um{}, against 1.663~\um{} for the sphere. With localized mismatch the ellipsoid is instead larger by 0.282~\um. A preferred region depends on both its coverage and its size.
+ 
+\textbf{Inspection after a state change.} A prescribed 3~\um{} shift along X drives coverage from 95.81\% to 0.11\% with the original threshold. Repeating the 96 reference readings recovers 95.77\% by increasing the mean equivalent radius from 1.505 to 4.010~\um. The tool-position prediction still carries the shift. The inspection notebook displays standardized residuals by axis, maps alarms to A--C poses and flags missing readings separately. One stored replay contains eight injected spikes and eight dropouts in their respective cases; it illustrates the alarm logic. General detection rates require repeated independently labelled trials.
+\input{mechanics}\input{study_outputs}
+\input{tables_outputs}
+\input{code_outputs}
+\input{runnable_outputs}
+\clearpage\section{Discussion and conclusions}
+\textbf{What the research contributes.} The geometric chain follows the experimentally studied XYZ--AC arrangement of Xiang and Altintas~\cite{xiang}. Design optimization for five-axis calibration and Monte Carlo checks on propagated geometric uncertainty have established precedents~\cite{mchichi,sepahi}. The present project's contribution is a controlled comparison in which the true synthetic geometry, measurement budget and future response are known. Separate controls change the error representation, drive dynamics, measurement dependence or state of the machine, allowing their effects to be examined one at a time where the design permits.
+ 
+\textbf{Interpreting the three outcomes.} A small ballbar residual supports the fitted sensor projection. A small trajectory RMS supports position performance along the tested commands. A high coverage fraction supports a statement about the frequency with which a noisy measurement falls inside its predicted region under the sampled distribution. These three observations require different assessments. In the state-shift experiment, for example, the center of every predicted region stays fixed; the higher coverage comes entirely from a larger threshold.
+ 
+\textbf{What physical measurements would add.} A lab implementation would need a calibrated fixture geometry, identified lever arms, a recorded source for the separate angular channels, and repeated XYZ reference readings independent of fitting. Repeating the assessment across cold and warm sessions would test whether observed shifts persist, whether their direction depends on pose, and whether a re-estimated geometry corrects the position itself.
+ 
+\textbf{Conclusion.}
+A periodic rotary model controls multi-turn extrapolation; servo feedforward accounts for much of the improvement on the simulated moving path. Reliable positioning and reliable uncertainty estimates require separate tests. For a physical machine, a direct extension is to fit the geometry in one session and repeat independent XYZ and angular measurements on another day. Reporting both trajectory error and prediction-region radius would show whether a change improved positioning or simply widened the acceptable residual.
+\begingroup\small
+\begin{thebibliography}{9}\setlength{\itemsep}{0pt}
+\bibitem{xiang} S. Xiang and Y. Altintas. Modeling and compensation of volumetric errors for five-axis machine tools. \emph{International Journal of Machine Tools and Manufacture}, 101, 65--78 (2016).
+\bibitem{lei} J. Lei et al. Distribution-free predictive inference for regression. \emph{Journal of the American Statistical Association}, 113, 1094--1111 (2018).
+\bibitem{mchichi} N. Alami Mchichi and J. R. R. Mayer. Optimal calibration strategy for a five-axis machine tool accuracy improvement using the D-optimal approach. \emph{International Journal of Advanced Manufacturing Technology}, 103, 251--265 (2019).
+\bibitem{sepahi} S. Sepahi-Boroujeni, J. R. R. Mayer and F. Khameneifar. Efficient uncertainty estimation of indirectly measured geometric errors of five-axis machine tools via Monte-Carlo validated GUM framework. \emph{Precision Engineering}, 67, 160--171 (2021).
+\end{thebibliography}\endgroup
+\appendix\input{equation_index}\end{document}

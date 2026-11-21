@@ -1,0 +1,45 @@
+\clearpage\section{Running and reading the project}
+\subsection{From a cutter location to a drive command}
+The first record of \file{results/example_cl.csv} requests a TCP of $(45,0,20)$ mm with unit direction $(0,-0.529919,0.848048)$. The corresponding first record of \file{results/drive_commands.csv} contains
+\[
+ (x,y,z,a,c)=(45.032093,10.625698,-133.063877,0.558542,0.000047).
+\]
+Linear components are in mm and rotary components in rad. The difference between these values and the requested Cartesian coordinates arises from the table orientation, tool length, fixture geometry and fitted correction. The remaining CSV fields give the simulated TCP and angular residuals. This file records numerical commands for the model.
+
+\begin{lstlisting}[language=Python]
+from io_tools import load_cl_csv
+from summarize import seed_means
+
+p, o = load_cl_csv("results/example_cl.csv")
+print(p[0])                         # [45.  0. 20.]
+rows = seed_means("audit_region_trials.csv",
+                  ["family", "noise_law", "method"])
+coverage, radius = rows["matched", "iid", "joint_noise_aware"]
+print(f"{coverage:.2%}, {radius:.3f} um")
+# 94.98%, 1.449 um
+\end{lstlisting}
+
+\subsection{Notebook and script outputs}
+\begin{description}
+\item[\file{dashboard.py}] Renders the helix and geometric-error controls. The saved \file{helix_animation.html} can be rotated in a browser; its display exaggeration changes the picture only.
+\item[\file{research_dashboard.py}] Varies the allocation of calibration poses, their tilt coverage and sensor channels. Its singular values reveal which combinations of errors the sensors can distinguish.
+\item[\file{publication_dashboard.py}] Replays the time-domain experiments, including temperature, reversal play, lag and the independent probe.
+\item[\file{journal_dashboard.py}] Displays uncertainty regions for the earlier fitted model and permits changes to sensor uncertainty. Its data belong to the earlier journal study.
+\item[\file{inspection_dashboard.py}] Produces the alarm map, CSV and six-case JSON summary. In \file{ME3305.ipynb}, the result summary, inspection replay and earlier uncertainty explorer can be run directly from the repository root.
+\item[\file{summarize.py} and \file{report_figure.py}] The former reads fit-level coverage and radius and averages within seed, then across seeds. The latter renders the two-panel summary from those records. The underlying fit, plant and covariance modules return arrays to these experiment drivers.
+\end{description}
+\clearpage\subsection{Verification and how to use the records}
+\begin{center}\small\begin{tabular}{@{}p{29mm}rp{99mm}@{}}\toprule
+Suite & Checks & What the outputs establish\\\midrule
+Baseline & 24 & Rigid-motion exponential against a matrix exponential, inverse/forward consistency at 100 poses, the rotary inverse, sensor projections and standalone remedies.\\
+Independent plant & 17 & Agreement of frame and homogeneous evaluations, periodic map seam, pose-design rank and dynamic sensor behaviour.\\
+Expanded studies & 16 & Task-design selection, exact two-pole update, model sensitivity, uncertainty arithmetic and dashboard callback.\\
+Representation and TCP & 17 & Spline continuity, rank, independent truth implementation, covariance and region explorer.\\
+Focused audit & 9 & Batched/scalar equivalence, joint covariance with correlated noise, cross-block removal and scoring safeguards.\\
+Inspection & 6 & Finite-sample rank, missing measurement, circular region selection, confusion counts, export and widgets.\\\bottomrule
+\end{tabular}\end{center}
+A concrete check is the direct matrix-exponential comparison: the baseline verification records a maximum absolute element discrepancy of order $10^{-14}$. The independent geometric implementation checks the frame conventions by computing the same pose in two ways. Neither check supplies a measured machine error. A failed rank check has a different consequence: the available readings cannot identify every coefficient, so a unique estimate with finite covariance would be unjustified.
+
+\textbf{Reading a saved run.} Start with the study's summary JSON to identify the model family, seed and protocol. Use the trial CSV for numerical comparisons, and an NPZ array when the shape of a trajectory or residual matters. For a paired comparison retain the same configuration, seed and noise draw for both methods. \file{OUTPUTS.md} indexes every data file, records the shapes of its arrays or the fields and first row of its CSV, and reproduces the verification records. All raw records are included in the GitHub archive. The report groups repeated stochastic draws into tables and traces to keep the experimental comparisons readable.
+
+\textbf{Output boundaries.} A simulation fit is one realization under a prescribed error map and noise law. Different layers use different numbers of coefficients and poses: the original ballbar identification has 44 parameters, the reference periodic fit has 43 rotary coefficients, and the 65 auxiliary quantities in the uncertainty calculation constitute a separate block. Those counts answer different identification questions. Interactive replays visualize saved cases; the frozen multi-seed records supply the aggregate results.

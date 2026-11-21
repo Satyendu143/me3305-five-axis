@@ -1,0 +1,18 @@
+\begin{table}[H]\centering\small
+\begin{tabular}{lllll}\toprule
+Truth family & Model & Parameters & RMS [$\um$] & 95\% interval\\\midrule
+harmonic & wrapped cubic & 31 & 7.458 & 6.310--8.687\\
+harmonic & fourier2 & 43 & 1.364 & 1.203--1.542\\
+harmonic & spline5 & 43 & 1.920 & 1.703--2.163\\
+harmonic & fourier4 & 67 & 0.416 & 0.353--0.481\\
+harmonic & spline9 & 67 & 0.463 & 0.404--0.519\\
+harmonic & validation selected & 67 & 0.417 & 0.353--0.483\\
+localized & wrapped cubic & 31 & 7.570 & 6.582--8.831\\
+localized & fourier2 & 43 & 1.653 & 1.330--1.969\\
+localized & spline5 & 43 & 2.099 & 1.728--2.451\\
+localized & fourier4 & 67 & 0.533 & 0.457--0.613\\
+localized & spline9 & 67 & 0.597 & 0.497--0.707\\
+localized & validation selected & 67 & 0.533 & 0.455--0.617\\
+\bottomrule\end{tabular}
+\caption{Equal-observation three-turn TCP comparisons. Intervals cluster on error seed with configurations nested. The 43/67-parameter spline and Fourier pairs have equal capacity; the wrapped cubic has 31. Selected models use disjoint noisy rotary validation poses, not TCP assessment truth.}\label{tab:journal_rep}
+\end{table}

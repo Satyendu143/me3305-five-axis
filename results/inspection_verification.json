@@ -1,0 +1,8 @@
+{
+  "rank_and_invalid_calibration": "pass",
+  "quadratic_score_and_missing_measurement": "pass",
+  "circular_ROI_and_empty_selection": "pass",
+  "confusion_and_undefined_metrics": "pass",
+  "reference_frozen_injection_and_export": "pass",
+  "widget_callbacks": "pass"
+}

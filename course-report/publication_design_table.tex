@@ -1,0 +1,16 @@
+\begin{table}[H]\centering\small
+\begin{tabular}{llllll}\toprule
+Factor & Design & Total RMS & 95\% interval & Noise only & Bias\\\midrule
+0 & space filling & 0.194 & 0.188--0.199 & 0.135 & 0.000\\
+0 & random & 0.200 & 0.192--0.207 & 0.139 & 0.000\\
+0 & d optimal & 0.186 & 0.180--0.192 & 0.125 & 0.000\\
+0 & task i optimal & 0.180 & 0.174--0.186 & 0.123 & 0.000\\
+1 & space filling & 1.242 & 1.077--1.417 & 0.135 & 1.224\\
+1 & random & 1.321 & 1.145--1.506 & 0.139 & 1.300\\
+1 & d optimal & 1.244 & 1.074--1.423 & 0.125 & 1.228\\
+1 & task i optimal & 1.258 & 1.091--1.435 & 0.123 & 1.241\\
+3 & space filling & 3.679 & 3.171--4.211 & 0.135 & 3.672\\
+3 & random & 3.911 & 3.372--4.478 & 0.139 & 3.901\\
+3 & d optimal & 3.689 & 3.168--4.231 & 0.125 & 3.683\\
+3 & task i optimal & 3.731 & 3.223--4.269 & 0.123 & 3.724\\
+\bottomrule\end{tabular}\caption{Held-out table displacement-vector RMS at 48 poses / 288 rotary readings, in $\um$. Total RMS resamples PIGEs and rotary noise. Conditional covariance excludes PIGE uncertainty and mismatch. Bias uses exact auxiliary PIGEs.}\label{tab:publication_design_table}\end{table}

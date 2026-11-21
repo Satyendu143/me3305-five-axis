@@ -1,0 +1,31 @@
+{
+  "SE3_vs_scipy_expm": 2.2315482794965646e-14,
+  "small_angle_and_translation_limit": "pass",
+  "IK_FK_100_poses_with_home_offsets_mm": 1.9898368414232615e-13,
+  "general_Paden_Kahan_two_branches": "pass",
+  "singularity_branch_keeps_previous_C": "pass",
+  "exact_error_transform_stays_in_SE3": "pass",
+  "symbolic_corrected_Eq29": "pass",
+  "corrected_inverse_at_trigonometric_edge_cases": 3.469446951953614e-18,
+  "printed_Eq29_counterexample": {
+    "eps_xa_true_urad": 30,
+    "printed_urad": -30.00000000000003,
+    "delta_za_true_um": 5,
+    "printed_um": 3.5000000000000004
+  },
+  "44_parameter_sensitivity_vs_exact_finite_difference": 7.958078650310297e-10,
+  "noiseless_linear_calibration_recovery_scaled": 6.990685808005992e-12,
+  "noiseless_exact_ballbar_recovery_scaled": 8.686212569275487e-05,
+  "radial_only_unidentifiability_rank": 40,
+  "equal_height_degeneracy_rank": 5,
+  "ballbar_three_directions_Rtest_information_equivalence": "pass",
+  "full_compensation_max_um": 1.0756090398242875e-05,
+  "damped_compensation_mm": 7.418283949015283e-14,
+  "PCS_datum_zero": "pass",
+  "CSV_sensor_roundtrip": "pass",
+  "thermal_remedy_ratio": 0.039409216867141904,
+  "backlash_remedy_ratio": 0.03341922061701887,
+  "servo_remedy_ratio": 3.828162892792911e-05,
+  "abbe_remedy_ratio": 0.07059276725661458,
+  "sensor_faults_remedy_ratio": 0.06551248131916577
+}

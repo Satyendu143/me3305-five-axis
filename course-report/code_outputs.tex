@@ -1,0 +1,56 @@
+\clearpage\section{Code excerpts and worked outputs}
+\subsection{Axis-tilt inversion}
+Subtracting tangential readings at two heights cancels the common translation. The implementation divides by the known height and radius separations. A zero lever arm is rejected before inversion.
+
+\file{calibration.py}
+\begin{lstlisting}[language=Python,basicstyle=\scriptsize\ttfamily,breaklines=true]
+def a_corrected(read,a,H,H1,L):
+    if abs(H1-H)<1e-12 or abs(L)<1e-12: raise ValueError('Need H1!=H and L!=0')
+    ra,rr,rt=read.T; s=np.sin(-a); c=np.cos(-a)
+    ex=-(rt[1]-rt[0])/(H1-H)
+    dy=-s*rr[0]+c*(rt[0]+H*ex)
+    dz=c*rr[0]+s*(rt[0]+H*ex)
+    dR=(rr[2]-rr[0])/L; dT=(rt[2]-rt[0])/L
+    ey=-c*dR-s*dT; ez=-s*dR+c*dT
+    dx=ra[0]-H*(c*ey+s*ez)
+    return np.array([dx,dy,dz,ex,ey,ez])
+\end{lstlisting}
+\subsection{Stateful backlash}
+The output stays inside a moving interval around the command. On reversal the command must traverse the play band before the output begins to follow in the opposite direction.
+
+\file{remedies.py}
+\begin{lstlisting}[language=Python,basicstyle=\scriptsize\ttfamily,breaklines=true]
+def play(command,width):
+    command=np.asarray(command); out=np.zeros_like(command); out[0]=command[0]
+    for k in range(1,len(command)):
+        out[k]=np.clip(out[k-1],command[k]-width/2,command[k]+width/2)
+    return out
+\end{lstlisting}\clearpage
+\subsection{Joint uncertainty propagation}
+The first contraction forms rotary covariance using a per-pose correlation block. The second contribution propagates the auxiliary uncertainty through K. The final comparison preserves the direct and fitted auxiliary variance but drops their cross terms.
+
+\file{audit_models.py}
+\begin{lstlisting}[language=Python,basicstyle=\scriptsize\ttfamily,breaklines=true]
+def covariance_variants(base,pinv,channel_correlation):
+    P=pinv.reshape(pinv.shape[0],-1,6)
+    Cz=np.einsum('ink,kl,jnl->ij',P,channel_correlation,P)
+    H,G,K=base['H'],base['G'],base['K'];C=auxiliary_covariance();B=G-K
+    rot=np.einsum('nij,jk,nlk->nil',H,Cz,H)
+    joint=rot+np.einsum('nij,jk,nlk->nil',K,C,K)
+    naive=rot+np.einsum('nij,jk,nlk->nil',G,C,G)+np.einsum('nij,jk,nlk->nil',B,C,B)
+    return dict(rotary=rot,joint=joint,naive=naive)
+\end{lstlisting}
+\subsection{Inspection threshold and acquisition rule}
+The array index k minus one converts the mathematical order statistic to Python indexing. Requesting a rank above the available calibration sample returns an infinite statistical cutoff.
+
+\file{inspection_dashboard.py}
+\begin{lstlisting}[language=Python,basicstyle=\scriptsize\ttfamily,breaklines=true]
+def threshold(scores, alpha=.05):
+    scores = np.asarray(scores, dtype=float)
+    if scores.ndim != 1 or not len(scores) or not np.isfinite(scores).all():
+        raise ValueError('Calibration scores must be a nonempty finite vector')
+    if not np.isfinite(alpha) or not 0 < alpha < 1:
+        raise ValueError('alpha must be strictly between zero and one')
+    k = int(np.ceil((len(scores) + 1) * (1 - alpha)))
+    return float(np.partition(scores, k - 1)[k - 1]) if k <= len(scores) else np.inf
+\end{lstlisting}

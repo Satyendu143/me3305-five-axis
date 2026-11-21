@@ -1,0 +1,82 @@
+{
+  "scope": "One saved synthetic example; no repeated-trial or physical detection claim",
+  "alpha": 0.05,
+  "normal_calibration_records": 96,
+  "assessment_records": 64,
+  "cases": [
+    {
+      "case": "normal",
+      "records": 64,
+      "alarms": 0,
+      "invalid": 0,
+      "labels_available": true,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 64,
+      "precision": null,
+      "recall": null,
+      "false_positive_rate": 0.0,
+      "f1": null
+    },
+    {
+      "case": "offset",
+      "records": 64,
+      "alarms": 64,
+      "invalid": 0,
+      "labels_available": true,
+      "tp": 64,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": null,
+      "f1": 1.0
+    },
+    {
+      "case": "sparse_spikes",
+      "records": 64,
+      "alarms": 8,
+      "invalid": 0,
+      "labels_available": true,
+      "tp": 8,
+      "fp": 0,
+      "fn": 0,
+      "tn": 56,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0,
+      "f1": 1.0
+    },
+    {
+      "case": "dropout",
+      "records": 64,
+      "alarms": 8,
+      "invalid": 8,
+      "labels_available": true,
+      "tp": 8,
+      "fp": 0,
+      "fn": 0,
+      "tn": 56,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0,
+      "f1": 1.0
+    },
+    {
+      "case": "harmonic_mismatch",
+      "records": 64,
+      "alarms": 29,
+      "invalid": 0,
+      "labels_available": false
+    },
+    {
+      "case": "localized_mismatch",
+      "records": 64,
+      "alarms": 27,
+      "invalid": 0,
+      "labels_available": false
+    }
+  ]
+}
