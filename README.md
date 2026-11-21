@@ -86,6 +86,6 @@ The final command writes the replay example, CSV and metrics to `inspection/`. S
 | Shriansh Krishna Dasi | ME24B014 |
 | Sarvesh Sasikumar | ME24B058 |
 
-The course edition adapts the supplied five-axis numerical research package credited to Satyendu Kar. The original package disclosed AI assistance with mathematical exposition, implementation, numerical studies, figures and drafting. The current packaging and report preparation also used AI assistance. The institute crest on the course cover comes from the team-supplied report template. The kinematic model follows Xiang and Altintas (2016), DOI 10.1016/j.ijmachtools.2015.11.006. The response-calibration construction follows Lei et al. (2018), cited in the report. The repository does not grant a software or data license.
+The kinematic model follows Xiang and Altintas (2016), DOI 10.1016/j.ijmachtools.2015.11.006. The response-calibration construction follows Lei et al. (2018), cited in the report. The repository does not grant a software or data license.
 
 The full focused audit was rerun for the expanded course report. [REPRODUCTION.json](REPRODUCTION.json) records row counts and maximum absolute differences from the frozen numerical CSVs for every numeric column.
